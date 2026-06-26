@@ -1,0 +1,30 @@
+# Dependency Sandboxes
+node_modules/
+
+# Local Compilation Targets
+.next/
+dist/
+build/
+out/
+
+# Monorepo Orchestration Cache
+.turbo/
+
+# Testing Metrics
+coverage/
+
+# Strict Security Guardrails (Protects Cerebras Credentials)
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+
+# Permit Shared Templates
+!.env.example
+
+# Local Editor Artifacts
+.DS_Store
+*.tsbuildinfo
+.vscode/
+.idea/
