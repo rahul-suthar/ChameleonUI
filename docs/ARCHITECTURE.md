@@ -4,11 +4,23 @@
 
 GenUI is a platform-agnostic Generative UI framework.
 
-The AI generates structured JSON documents that describe *what* should be rendered.
+Instead of generating executable code, the AI generates structured JSON documents describing **what** should be rendered.
 
-Platform-specific renderers (Next.js, React Native, etc.) decide *how* to render those documents.
+Platform specific renderers such as Next.js and React-Native decide how those documents are rendered.
 
-The AI never generates executable code.
+This strict separation enables secure, deterministic, and reusable user interfaces across multiple platforms.
+
+---
+
+# Architectural Goals
+
+The architecture is designed around five primary goals.
+
+- **Platform Independence**: The same UI document can be rendered on Web, Mobile, or future platforms.
+- **Deterministic Rendering**: Every valid document produces a predictable interface.
+- **Security**: AI never generates executable code or application logic.
+- **Extensibility**: New components, renderers, and platforms can be added without changing existing contracts.
+- **Runtime Validation**: Every generated document is validated before rendering.
 
 ---
 
@@ -16,17 +28,17 @@ The AI never generates executable code.
 
 ## Functional vs Presentational Separation
 
-Application logic is owned by the application.
+Application behavior belongs to the application.
 
-Presentation is owned by the AI.
+Presentation belongs to the AI.
 
-The AI never owns business logic.
+Business logic is never delegated to the language model.
 
 ---
 
 ## Secure by Design
 
-The AI CANNOT generate:
+The AI **cannot** generate:
 
 - JSX
 - HTML
@@ -36,147 +48,135 @@ The AI CANNOT generate:
 - React components
 - Event handlers
 
-The AI ONLY generates structured JSON.
+The AI generates **validated JSON documents only**.
 
 ---
 
 ## Runtime Safety
 
-Every AI response must pass:
+Every generated document follows the same validation pipeline:
 
+```text
 AI Output
-
-↓
-
+    │
+    ▼
 Zod Schema Validation
-
-↓
-
+    │
+    ▼
 Business Validation
-
-↓
-
-Renderer
+    │
+    ▼
+Platform Renderer
+```
 
 Invalid documents are rejected before rendering.
 
 ---
 
-## Package Structure
+# Package Structure
 
+```text
 packages/
-
-ui-core/
-
-Shared architecture.
-
-Shared contracts.
-
-Shared constants.
-
-Shared types.
-
-Shared schemas.
-
-Shared validators.
-
-Shared prompts.
-
-Platform independent.
-
-No React.
-
-No Next.js.
-
-No React Native.
-
----
+└── genui-core/
+    • Architectural Contracts
+    • Constants
+    • Shared Types
+    • Runtime Schemas
+    • Validators
+    • Prompt Templates
+    • Parsing Pipeline
+    • Platform Independent
 
 apps/
+├── web/
+│   • Next.js Renderer
+│   • Server Components
+│   • AI Orchestration
+│
+└── mobile/ (planned)
+    • React Native Renderer
+```
 
-web/
+`@genui/core` must remain completely platform independent.
 
-Next.js renderer.
+It must never depends on:
 
-SSR.
-
-Server Components.
-
-AI orchestration.
+- React
+- Next.js
+- React-Native
+- Browser APIs
+- Node-specific rendering logic
 
 ---
 
-mobile/
+# Dependency Graph
 
-React Native renderer.
-
----
-
-## Dependency Graph
-
+```text
 contracts
-
-↓
-
+      │
+      ▼
 constants
-
-↓
-
+      │
+      ▼
 types
-
-↓
-
+      │
+      ▼
 schemas
-
-↓
-
+      │
+      ▼
 validators
-
-↓
-
+      │
+      ▼
 builders (future)
-
-↓
-
+      │
+      ▼
 renderers
+```
 
-No upward dependencies.
+## Dependency Rules
 
-No circular imports.
+- Dependencies always flow downward.
+- Circular dependencies are prohibited.
+- Lower layers must never import higher layers.
+- Every layer has a single responsibilty.
 
 ---
 
-## Document Hierarchy
+# Document Hierarchy
 
+Every UI document follows a fixed hierarchy.
+
+```text
 Page
-
-↓
-
+ │
+ ▼
 Section
-
-↓
-
+ │
+ ▼
 Component
-
-↓
-
+ │
+ ▼
 Children
+```
+
+## Hierarchy Rules
+
+- A Page owns Sections.
+- A Section owns Components.
+- Container Components own child Components.
+- Leaf Component never own children.
+- Pages never contain Components directly.
+- Sections never contain Sections.
 
 The hierarchy is immutable.
 
-Components never own Pages.
-
-Sections never own Sections.
-
-Pages never own Components directly.
-
 ---
 
-## Component Taxonomy
+# Component Taxonomy
 
-Container Components
+## Container Components
 
-Own children.
+Container Components own layout and composition.
 
 Examples:
 
@@ -187,9 +187,13 @@ Examples:
 - Footer
 - Hero
 
-Leaf Components
+Containers may contain child Components.
 
-Cannot own children.
+---
+
+## Leaf Components
+
+Leaf Components represent interaction or presentation.
 
 Examples:
 
@@ -200,27 +204,28 @@ Examples:
 - Text
 - Badge
 
+Leaf Components can never contain children.
+
 ---
 
-## Styling Philosophy
+# Styling Philosophy
 
-The AI does not generate CSS.
+The AI never generates CSS.
 
-The AI expresses intent.
+Instead, it expresses visual intent.
 
+```text
 ThemeIntent
-
-↓
-
+      │
+      ▼
 StyleIntent
-
-↓
-
-Renderer
-
-↓
-
-Platform-specific styling
+      │
+      ▼
+Platform Renderer
+      │
+      ▼
+Platform Styles
+```
 
 Current StyleIntent domains:
 
@@ -229,94 +234,131 @@ Current StyleIntent domains:
 - Spacing
 - Decoration
 
-The renderer maps intents to actual styles.
+StyleIntent describes **visual intent**, not implementation.
+
+Each renderer is responsible for translating those intents into platform-specific styling systems.
 
 ---
 
-## Bindings
+# Bindings
 
-Application logic is predefined.
+Application behavior is predefined.
 
-The AI binds components to existing identifiers.
+The AI only references existing identifiers.
 
 Supported bindings:
 
-FieldBinding
+- FieldBinding
+- ActionBinding
 
-ActionBinding
+Binding Rules:
 
-A component may not contain both simultaneously.
-
----
-
-## Serialization Rules
-
-Every document must be valid JSON.
-
-No functions.
-
-No Dates.
-
-No Maps.
-
-No Sets.
-
-No Symbols.
-
-No platform-specific objects.
-
-Only JSON-compatible values.
+- A component may declare at most one binding.
+- Bindings reference existing application identifiers.
+- Binding identifiers are validated before rendering.
+- The AI never creates new bindings.
 
 ---
 
-## Validation Philosophy
+# Serialization Rules
 
+Every generated document must be valid JSON.
+
+Allowed values:
+
+- Objects
+- Arrays
+- Strings
+- Numbers
+- Booleans
+- Null
+
+Not allowed:
+
+- Functions
+- Date
+- Map
+- Set
+- Symbol
+- Class Instances
+- Platform-specific objects
+
+Only deterministic JSON values are permitted.
+
+---
+
+# Validation Philosophy
+
+Validation occurs in multiple independent layers.
+
+```text
 TypeScript
-
-Compile-time correctness.
-
-↓
-
+Compile-time correctness
+        │
+        ▼
 Zod
-
-Runtime shape validation.
-
-↓
-
+Runtime shape validation
+        │
+        ▼
 Business Validators
+Architectural correctness
+        │
+        ▼
+Platform Renderer
+UI interpretation
+```
 
-Architectural correctness.
-
-↓
-
-Renderer
-
-Platform-specific interpretation.
+Each layer validates the output of the previous layer.
 
 ---
 
-## Future Architecture
+# Rendering Pipeline
 
-builders/
+Every generated interface follows the same deterministic lifecycle.
 
-Developer-friendly document builders.
+```text
+User Context
+      │
+      ▼
+Prompt Compilation
+      │
+      ▼
+LLM JSON Generation
+      │
+      ▼
+Zod Validation
+      │
+      ▼
+Business Validation
+      │
+      ▼
+Parsed Page Document
+      │
+      ▼
+Platform Renderer
+      │
+      ▼
+React / React Native Components
+```
 
-prompt/
+Each stage has a single responsibility.
 
-Prompt compiler.
+Every stage validates its input before passing control to the next stage.
 
-renderer-web/
+---
 
-Next.js interpreter.
+# Future Architecture
 
-renderer-native/
+The platform is designed to expand without changing the existing contracts.
 
-React Native interpreter.
+```text
+packages/
+├── builders/           (planned)
+├── prompt/             (planned)
+├── renderer-web/       (planned)
+├── renderer-native/    (planned)
+├── cerebras/           (planned)
+└── cache/              (planned)
+```
 
-cerebras/
-
-Inference client.
-
-cache/
-
-Response caching.
+Future packages must respect the existing dependency graph and architectural boundaries.

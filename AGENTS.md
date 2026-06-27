@@ -1,110 +1,175 @@
 # AGENTS.md
 
-## Project Summary
+## Project Overview
 
 GenUI is a platform-agnostic Generative UI framework.
 
-AI generates JSON documents.
+Large Language Models generate structured JSON documents describing user interfaces.
 
-Renderers interpret those documents.
+Platform-specific renderers interpret those documents into native UI.
 
 The AI never generates executable code.
 
 ---
 
-# Architectural Rules
+# Primary Objective
 
-Always preserve the dependency graph.
+Always preserve the separation between:
 
-contracts
+* Application Logic
+* UI Presentation
 
-↓
+Business logic belongs to the application.
 
-constants
-
-↓
-
-types
-
-↓
-
-schemas
-
-↓
-
-validators
-
-↓
-
-builders
-
-↓
-
-renderers
-
-Never violate this order.
+Presentation belongs to the generated document.
 
 ---
 
-# Package Rules
+# Architecture Layers
 
-packages/ui-core
+The dependency graph is immutable.
+
+```text
+contracts
+      │
+      ▼
+constants
+      │
+      ▼
+types
+      │
+      ▼
+schemas
+      │
+      ▼
+validators
+      │
+      ▼
+builders
+      │
+      ▼
+renderers
+```
+
+## Rules
+
+* Dependencies only flow downward.
+* Never create circular imports.
+* Never move business logic into lower layers.
+* Do not skip architectural layers.
+
+---
+
+# Repository Layout
+
+```text
+apps/
+├── web/
+└── mobile/ (planned)
+
+packages/
+└── genui-core/
+```
+
+## apps/
+
+Contains platform-specific renderers.
+
+Platform code belongs here.
+
+## packages/genui-core/
+
+Contains shared runtime logic.
 
 Must remain platform independent.
 
-Never import:
+---
 
-- React
-- React Native
-- Next.js
-- Expo
-- DOM APIs
+# Platform Restrictions
 
-Only shared architecture belongs here.
+Never import these into `@genui/core`:
+
+* React
+* React Native
+* Next.js
+* Expo
+* Browser APIs
+* DOM APIs
+
+Only shared runtime architecture belongs inside `@genui/core`.
 
 ---
 
 # Serialization Rules
 
-Documents must be JSON serializable.
+Generated documents must be completely JSON serializable.
 
 Never introduce:
 
-- functions
-- callbacks
-- JSX
-- HTML
-- CSS
-- DOM nodes
-- platform objects
+* Functions
+* Callbacks
+* JSX
+* HTML
+* CSS
+* DOM Nodes
+* Class instances
+* Symbols
+* Platform-specific objects
 
 ---
 
 # Validation Rules
 
-Never bypass validation.
+Never trust raw AI output.
 
-Always use:
+Always validate using:
 
+```ts
 parsePage()
+```
 
-Never call renderer directly with AI output.
+Validation pipeline:
+
+```text
+AI Output
+    │
+    ▼
+Zod Validation
+    │
+    ▼
+Business Validation
+    │
+    ▼
+Renderer
+```
+
+Do not bypass this pipeline.
 
 ---
 
 # Component Rules
 
-Leaf components never own children.
+Hierarchy is fixed.
 
-Container components may own children.
+```text
+Page
+ │
+ ▼
+Section
+ │
+ ▼
+Component
+ │
+ ▼
+Children
+```
 
-Pages own Sections.
+Rules:
 
-Sections own Components.
-
-Components own Components.
-
-Nothing else.
+* Pages own Sections.
+* Sections own Components.
+* Container Components own Components.
+* Leaf Components never own children.
 
 ---
 
@@ -112,48 +177,83 @@ Nothing else.
 
 The AI expresses intent.
 
-The renderer chooses implementation.
+Renderers implement styling.
 
-Never hardcode Tailwind classes inside generated documents.
+Never expose:
 
-Never expose CSS to the AI.
+* Tailwind classes
+* CSS
+* React styling APIs
+
+Generated documents should only contain:
+
+* ThemeIntent
+* StyleIntent
 
 ---
 
 # Development Guidelines
 
-Prefer immutable data.
+Prefer:
 
-Prefer readonly arrays.
+* Immutable objects
+* `readonly` arrays
+* Branded primitive types
+* Composition over inheritance
+* Small focused modules
+* Deterministic runtime behavior
 
-Prefer branded primitive types.
+Avoid:
 
-Prefer composition over inheritance.
-
-Avoid circular imports.
-
-Keep files small and focused.
+* Circular imports
+* Platform coupling
+* Shared mutable state
+* Runtime side effects
 
 ---
 
-# Current Status
+# Before Editing
 
-Completed:
+When introducing a new feature:
 
-- Monorepo
-- Contracts
-- Constants
-- Types
-- Error hierarchy
+1. Determine its architectural layer.
+2. Verify dependency direction.
+3. Update contracts if required.
+4. Update types before schemas.
+5. Update schemas before validators.
+6. Preserve backward compatibility whenever possible.
 
-In Progress:
+---
 
-- Zod schemas
-- Validators
-- parsePage()
+# Current Project Status
 
-Next:
+## Completed
 
-- Mock renderer
-- Builder layer
-- Cerebras integration
+* Monorepo
+* Turborepo
+* Next.js application
+* Shared `@genui/core`
+* Architecture contracts
+* Constants
+* Shared types
+* Runtime schemas
+* Validators
+* Parsing pipeline
+* Documentation
+
+## Next Milestone
+
+Build the platform-independent recursive renderer capable of interpreting validated Page documents.
+
+---
+
+# Success Criteria
+
+Every contribution should preserve these guarantees:
+
+* Platform independence
+* Deterministic rendering
+* Runtime validation
+* JSON-only document model
+* Strict architectural boundaries
+* Separation of logic and presentation

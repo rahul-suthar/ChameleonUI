@@ -1,107 +1,191 @@
 # GenUI Implementation Roadmap
 
-This document serves as the absolute milestone log for the GenUI platform. It anchors project state tracking for local development agents and repository compilers.
+This document tracks the implementation progress of the GenUI platform.
+
+Each phase represents a major architectural milestone. A phase is considered complete only when every task within it has been implemented, validated, and integrated into the platform.
 
 ---
 
-## Phase 1 - Foundation
-*Status: In Progress*
+# Phase 1 — Foundation
 
-### Workspace
-- [x] pnpm Workspace
-- [x] Turborepo configuration and pipeline tasks
-- [x] Next.js 16 application workspace shell
-- [x] Agnostic `@genui/core` (`ui-core`) package structure
+**Status:** 🚧 In Progress
 
-### Contracts
-- [x] Page structural architecture rules
-- [x] Section block ownership boundaries
-- [x] Component container vs leaf elements taxonomy
-- [x] Theme visual intent translation layer
-- [x] Platform limitations security checkpoints
+## Workspace
 
-### Constants
-- [x] Component taxonomy flat lookups
-- [x] Theme moods, contrasts, densities, and palettes
-- [x] Section kind structural classifications
-- [x] Binding target categories configuration
-- [x] Initial design style utility vocabulary
-
-### Types
-- [x] Common nominal branded primitives (`common.ts`)
-- [x] Page metadata properties interface (`metadata.ts`)
-- [x] Overarching styling framework boundaries (`theme.ts`)
-- [x] Platform decoupled binding identifiers (`bindings.ts`)
-- [x] Strict recursive component tree definitions (`component.ts`)
-- [x] Section block layout models (`section.ts`)
-- [x] Master document layout structures (`page.ts`)
-
-### Runtime
-- [x] Decoupled custom exception error hierarchy
-- [x] Immutable document schema versioning hook (`1.0.0`)
-- [ ] Complete Zod schemas verification mapping
-- [ ] Layer 3 business semantic rule validators
-- [ ] Central runtime shield entrance gate (`parsePage()`)
+* [x] pnpm Workspace
+* [x] Turborepo pipeline
+* [x] Next.js 16 application
+* [ ] React Native / Expo workspace
+* [x] Platform-independent `@genui/core`
 
 ---
 
-## Phase 2 - Mock & Static Render Engines
-*Status: Planned*
+## Architecture Contracts
 
-- [ ] Mock document generation mock suites
-- [ ] Platform-agnostic static JSON layout engine
-
----
-
-## Phase 3 - Prompt Compilation
-*Status: Planned*
-
-- [ ] Core system prompt compiler package
-- [ ] Automated markdown contract text generation
-- [ ] Dynamic constant tuple array injection
+* [x] Page contract
+* [x] Section contract
+* [x] Component taxonomy
+* [x] Theme contract
+* [x] Platform limitation rules
 
 ---
 
-## Phase 4 - Inference & Local Caching
-*Status: Planned*
+## Constants
 
-- [ ] High-speed Cerebras API client integration
-- [ ] Sub-100ms streaming layout tree generation
-- [ ] Multi-tier caching layer (Next.js `"use cache"` + Redis)
-
----
-
-## Phase 5 - Web Viewport Interpretation
-*Status: Planned*
-
-- [ ] Next.js component render loop infrastructure
-- [ ] Recursive element parsing and tree resolution
-- [ ] Pure server-side layout streaming components
+* [x] Component taxonomy
+* [x] Theme definitions
+* [x] Section kinds
+* [x] Binding definitions
+* [x] Style intent vocabulary
 
 ---
 
-## Phase 6 - Mobile Viewport Interpretation
-*Status: Planned*
+## Shared Types
 
-- [ ] React Native / Expo engine views integration
-- [ ] Platform-shared layout tree interpretation engine
-- [ ] Cross-platform design token styling adapters
-
----
-
-## Phase 7 - Programmatic Developer Tooling
-*Status: Planned*
-
-- [ ] Fluent builder utility API
-- [ ] Structural layout developer Domain-Specific Language (DSL)
-- [ ] Code-driven automated document creation scripts
+* [x] Common branded primitives
+* [x] Metadata
+* [x] Theme model
+* [x] Bindings
+* [x] Component tree
+* [x] Section model
+* [x] Page model
 
 ---
 
-## Phase 8 - Production Hardening & Operations
-*Status: Planned*
+## Runtime
 
-- [ ] Complete framework production telemetry instrumentation
-- [ ] Layout tree generation business analytics
-- [ ] Visual snapshot testing validation cycles
-- [ ] Low-latency performance engine benchmarking
+* [x] Error hierarchy
+* [x] Schema versioning
+* [x] Zod schemas
+* [x] Business validators
+* [x] `parsePage()` runtime entrypoint
+
+---
+
+## Documentation
+
+* [x] README
+* [x] Architecture document
+* [x] Architecture Decision Records
+* [x] Roadmap
+* [x] AI Agent guide
+
+---
+
+# Phase 2 — Mock Runtime & Static Rendering
+
+**Status:** ⬜ Planned
+
+## Goals
+
+* [ ] Example page documents
+* [ ] Mock data generators
+* [ ] Static JSON rendering
+* [ ] Snapshot fixtures
+
+---
+
+# Phase 3 — Prompt Compilation
+
+**Status:** ⬜ Planned
+
+## Goals
+
+* [ ] Prompt compiler
+* [ ] Contract injection
+* [ ] Constant injection
+* [ ] Automatic prompt generation
+* [ ] Prompt versioning
+
+---
+
+# Phase 4 — AI Inference & Cache Layer
+
+**Status:** ⬜ Planned
+
+## Goals
+
+* [ ] Cerebras client
+* [ ] Streaming inference
+* [ ] Response normalization
+* [ ] Cache abstraction
+* [ ] Next.js `use cache`
+* [ ] Redis / Vercel KV synchronization
+
+---
+
+# Phase 5 — Web Renderer
+
+**Status:** ⬜ Planned
+
+## Goals
+
+* [ ] Recursive renderer
+* [ ] Component registry
+* [ ] StyleIntent interpreter
+* [ ] ThemeIntent resolver
+* [ ] Server Components
+* [ ] Streaming layouts
+
+---
+
+# Phase 6 — Mobile Renderer
+
+**Status:** ⬜ Planned
+
+## Goals
+
+* [ ] Expo workspace
+* [ ] React Native renderer
+* [ ] Shared interpreter
+* [ ] Platform styling adapter
+
+---
+
+# Phase 7 — Developer Tooling
+
+**Status:** ⬜ Planned
+
+## Goals
+
+* [ ] Fluent Builder API
+* [ ] Document Builder DSL
+* [ ] Mock generators
+* [ ] Testing helpers
+* [ ] CLI utilities
+
+---
+
+# Phase 8 — Production Hardening
+
+**Status:** ⬜ Planned
+
+## Goals
+
+* [ ] Performance profiling
+* [ ] Telemetry
+* [ ] Analytics
+* [ ] Snapshot testing
+* [ ] Benchmark suite
+* [ ] Observability
+* [ ] Production documentation
+
+---
+
+# Long-term Vision
+
+Future packages may include:
+
+```text
+packages/
+├── builders/
+├── renderer-web/
+├── renderer-native/
+├── prompt/
+├── cerebras/
+├── cache/
+├── testing/
+└── cli/
+```
+
+Each package must respect the platform architecture, dependency graph, and validation pipeline defined in the architecture documentation.
