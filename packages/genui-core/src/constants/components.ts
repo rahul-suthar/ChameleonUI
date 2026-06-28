@@ -2,7 +2,6 @@ export const CONTAINER_COMPONENTS = [
   "stack",
   "grid",
   "card",
-  "section",
   "navbar",
   "footer",
 ] as const;
@@ -29,7 +28,6 @@ export const COMPONENTS_TYPES = [
   "stack",
   "grid",
   "card",
-  "section",
   "navbar",
   "footer",
 
