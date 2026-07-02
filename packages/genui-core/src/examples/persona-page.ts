@@ -1,170 +1,131 @@
 import { PLATFORM_SCHEMA_VERSION } from "../schema-version";
 import type { Component, Page, Section } from "../types";
 import { createISODateString } from "../utils";
-import { cardStyle, defaultStyle, heroStyle } from "./styles";
-import { defaultTheme } from "./theme";
+import { parsePage } from "../validators";
+import {
+  badgeStyle,
+  cardStyle,
+  cardTitleStyle,
+  defaultStyle,
+  heroStyle,
+  heroSubtitleStyle,
+  primaryActionStyle,
+  sectionStackStyle,
+} from "./styles";
 
-const metadata: Page["metadata"] = {
-  id: "page_persona" as never,
-  title: "Developer Persona" as never,
-  description:
-    "Collect developer preferences before generating a personalzied interface." as never,
-
+const metadata = {
+  id: "11111111-1111-4111-8111-111111111111",
+  title: "Developer Profile",
+  description: "Developer portfolio",
   version: PLATFORM_SCHEMA_VERSION,
   generatedAt: createISODateString(),
 };
 
-const heroTitle: Component = {
-  id: "text_title" as never,
-  order: 0,
-  type: "text",
-  data: {
-    content: "Build an interface that matches you.",
-    variant: "heading",
-  },
-  style: heroStyle,
+const themeIntent = {
+  mood: "developer",
+  contrast: "high",
+  density: "compact",
+  palette: "zinc",
 };
 
-const heroDescription: Component = {
-  id: "text_description" as never,
+const heroTitle: Component = {
+  id: "22222222-2222-4222-8222-222222222222" as never,
+  type: "heading",
   order: 1,
-  type: "text",
+  style: heroStyle,
   data: {
-    content:
-      "Tell us a little about yourself. We'll generate a UI tailored to your workflow.",
-    variant: "body",
+    content: "Rahul Suthar",
   },
-  style: defaultStyle,
+};
+
+const heroSubtitle: Component = {
+  id: "33333333-3333-4333-8333-333333333333" as never,
+  type: "text",
+  order: 2,
+  style: heroSubtitleStyle,
+  data: {
+    content: "Backend Engineer building GenUI.",
+  },
+};
+
+const heroBadge: Component = {
+  id: "44444444-4444-4444-8444-444444444444" as never,
+  type: "badge",
+  order: 3,
+  style: badgeStyle,
+  data: {
+    content: "Open to Internship",
+    variant: "secondary",
+  },
+};
+
+const heroStack: Component = {
+  id: "55555555-5555-4555-8555-555555555555" as never,
+  type: "stack",
+  order: 1,
+  style: sectionStackStyle,
+  data: {},
+  children: [heroTitle, heroSubtitle, heroBadge],
 };
 
 const heroSection: Section = {
-  id: "section_hero" as never,
+  id: "66666666-6666-4666-8666-666666666666" as never,
   kind: "hero",
-  components: [heroTitle, heroDescription],
+  components: [heroStack],
 };
 
-const formTitle: Component = {
-  id: "text_title" as never,
-  order: 0,
-  type: "text",
-  data: {
-    content: "Developer Profile",
-    variant: "heading",
-  },
-  style: defaultStyle,
-};
-
-const nameInput: Component = {
-  id: "input_name" as never,
+const projectHeading: Component = {
+  id: "77777777-7777-4777-8777-777777777777" as never,
+  type: "heading",
   order: 1,
-  type: "input",
+  style: cardTitleStyle,
   data: {
-    label: "Name",
-    placeholder: "John Doe",
-  },
-  style: defaultStyle,
-  fieldBinding: {
-    id: "user_name" as never,
+    content: "GenUI Platform",
   },
 };
 
-const roleSelect: Component = {
-  id: "select_role" as never,
+const projectText: Component = {
+  id: "88888888-8888-4888-8888-888888888888" as never,
+  type: "text",
   order: 2,
-  type: "select",
-  data: {
-    label: "Role",
-    options: ["Frontend", "Backend", "Full Stack", "Mobile", "DevOps"],
-  },
   style: defaultStyle,
-  fieldBinding: {
-    id: "user_role" as never,
+  data: {
+    content: "Platform-agnostic Generative UI framework.",
   },
 };
 
-const experienceSelect: Component = {
-  id: "select_experience" as never,
-  order: 3,
-  type: "select",
-  data: {
-    label: "Experience",
-    options: ["Student", "0-2 years", "2-5 years", "5+ years"],
-  },
-  style: defaultStyle,
-  fieldBinding: {
-    id: "experience_level" as never,
-  },
-};
-
-const stackSelect: Component = {
-  id: "select_stack" as never,
-  order: 4,
-  type: "select",
-  data: {
-    label: "Favorite Stack",
-    options: ["MERN", "T3", "Spring Boot", "Django", "Next.js"],
-  },
-  style: defaultStyle,
-  fieldBinding: {
-    id: "favorite_stack" as never,
-  },
-};
-
-const continueButton: Component = {
-  id: "button_continue" as never,
-  order: 5,
+const projectButton: Component = {
+  id: "99999999-9999-4999-8999-999999999999" as never,
   type: "button",
+  order: 3,
+  style: primaryActionStyle,
   data: {
-    label: "Generate My Interface",
+    label: "View Repository",
   },
-  style: defaultStyle,
   actionBinding: {
-    id: "continue" as never,
+    id: "view_repository" as never,
   },
 };
 
-const formStack: Component = {
-  id: "stack_form" as never,
-  order: 0,
-  type: "stack",
-  data: {
-    direction: "vertical",
-    gap: "md",
-  },
-  style: defaultStyle,
-  children: [
-    formTitle,
-    nameInput,
-    roleSelect,
-    experienceSelect,
-    stackSelect,
-    continueButton,
-  ],
-};
-
-const formCard: Component = {
-  id: "card_form" as never,
-  order: 0,
+const projectCard: Component = {
+  id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa" as never,
   type: "card",
-  data: {},
+  order: 1,
   style: cardStyle,
-  children: [formStack],
+  data: {},
+  children: [projectHeading, projectText, projectButton],
 };
 
-const formSection: Section = {
-  id: "section_form" as never,
-  kind: "form",
-  components: [formCard],
+const projectSection: Section = {
+  id: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb" as never,
+  kind: "content",
+  components: [projectCard],
 };
 
-export const personaPage: Page = {
+const rawPersonaPage = {
   metadata,
-  themeIntent: defaultTheme,
-  sections: [heroSection, formSection],
+  themeIntent,
+  sections: [heroSection, projectSection],
 };
 
-// optional sanity check during development
-//
-// import { parsePage } from "../validators";
-//
-// parsePage(personaPage);
+export const personaPage: Page = parsePage(rawPersonaPage);
