@@ -1,10 +1,11 @@
-import { PLATFORM_SCHEMA_VERSION } from "@genui/core";
+import { PageRenderer } from "@/genui";
+import { RendererErrorBound } from "@/genui/components/RendererErrorBound";
+import { personaPage } from "@genui/core";
 
 export default function Home() {
   return (
-    <main className="p-10">
-      <h1>GenUI Health Check</h1>
-      <p>{PLATFORM_SCHEMA_VERSION}</p>
-    </main>
+    <RendererErrorBound>
+      <PageRenderer page={personaPage} />
+    </RendererErrorBound>
   )
 }
