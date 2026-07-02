@@ -15,7 +15,6 @@ Each phase represents a major architectural milestone. A phase is considered com
 * [x] pnpm Workspace
 * [x] Turborepo pipeline
 * [x] Next.js 16 application
-* [ ] React Native / Expo workspace
 * [x] Platform-independent `@genui/core`
 
 ---
@@ -74,13 +73,16 @@ Each phase represents a major architectural milestone. A phase is considered com
 
 # Phase 2 — Mock Runtime & Static Rendering
 
-**Status:** ⬜ Planned
+**Status:** ✅ MVP Complete
 
 ## Goals
 
-* [ ] Example page documents
+* [x] Example page documents
+* [x] Static JSON rendering
+* [x] Component registry
+* [x] Platform renderer loop
+* [x] StyleIntent / ThemeIntent mapping layer
 * [ ] Mock data generators
-* [ ] Static JSON rendering
 * [ ] Snapshot fixtures
 
 ---
@@ -116,16 +118,19 @@ Each phase represents a major architectural milestone. A phase is considered com
 
 # Phase 5 — Web Renderer
 
-**Status:** ⬜ Planned
+**Status:** 🚧 In Progress
 
 ## Goals
 
-* [ ] Recursive renderer
-* [ ] Component registry
-* [ ] StyleIntent interpreter
+* [x] Recursive renderer
+* [x] Component registry
+* [x] StyleIntent interpreter MVP
+* [x] UI library integration
+* [x] `parsePage()` before rendering
 * [ ] ThemeIntent resolver
 * [ ] Server Components
 * [ ] Streaming layouts
+* [ ] Expanded component coverage
 
 ---
 

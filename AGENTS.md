@@ -131,16 +131,23 @@ parsePage()
 Validation pipeline:
 
 ```text
-AI Output
+AI Output / Semantic Page
     │
     ▼
-Zod Validation
+parsePage()
+    │
+    ├─ Zod Validation
+    │
+    └─ Business Validation
     │
     ▼
-Business Validation
+Component Registry
     │
     ▼
-Renderer
+Platform Renderers
+    │
+    ▼
+UI Library
 ```
 
 Do not bypass this pipeline.
@@ -238,12 +245,15 @@ When introducing a new feature:
 * Shared types
 * Runtime schemas
 * Validators
-* Parsing pipeline
+* `parsePage()` runtime entry point
+* Web renderer MVP
+* Component registry
+* Style/theme intent mapping layer
 * Documentation
 
 ## Next Milestone
 
-Build the platform-independent recursive renderer capable of interpreting validated Page documents.
+Expand renderer component coverage, improve renderer ergonomics, and prepare the builder layer.
 
 ---
 

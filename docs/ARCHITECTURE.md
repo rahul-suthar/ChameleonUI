@@ -57,19 +57,26 @@ The AI generates **validated JSON documents only**.
 Every generated document follows the same validation pipeline:
 
 ```text
-AI Output
+Semantic Page
     │
     ▼
-Zod Schema Validation
+parsePage()
+    │
+    ├─ Zod Schema Validation
+    │
+    └─ Business Validation
     │
     ▼
-Business Validation
+Component Registry
     │
     ▼
-Platform Renderer
+Platform Renderers
+    │
+    ▼
+UI Library
 ```
 
-Invalid documents are rejected before rendering.
+`parsePage()` is the mandatory runtime entry point before rendering. Invalid documents are rejected before they reach any platform renderer.
 
 ---
 
@@ -90,8 +97,10 @@ packages/
 apps/
 ├── web/
 │   • Next.js Renderer
-│   • Server Components
-│   • AI Orchestration
+│   • Component Registry
+│   • Platform Renderers
+│   • StyleIntent / ThemeIntent Mapping
+│   • UI Library Integration
 │
 └── mobile/ (planned)
     • React Native Renderer
@@ -240,6 +249,27 @@ Each renderer is responsible for translating those intents into platform-specifi
 
 ---
 
+## Style and Theme Mapping
+
+Generated documents contain only abstract intent.
+
+```text
+ThemeIntent
+      │
+      ▼
+StyleIntent
+      │
+      ▼
+Renderer Mapping
+      │
+      ▼
+UI Library Props / Platform Styles
+```
+
+The Web renderer maps `StyleIntent / ThemeIntent` into UI library compatible styling decisions. The generated document never contains Tailwind classes, CSS, inline styles, or platform objects. 
+
+---
+
 # Bindings
 
 Application behavior is predefined.
@@ -335,10 +365,13 @@ Business Validation
 Parsed Page Document
       │
       ▼
-Platform Renderer
+Component Registry
       │
       ▼
-React / React Native Components
+Platform Renderers
+      │
+      ▼
+UI Library Components
 ```
 
 Each stage has a single responsibility.
@@ -355,7 +388,6 @@ The platform is designed to expand without changing the existing contracts.
 packages/
 ├── builders/           (planned)
 ├── prompt/             (planned)
-├── renderer-web/       (planned)
 ├── renderer-native/    (planned)
 ├── cerebras/           (planned)
 └── cache/              (planned)

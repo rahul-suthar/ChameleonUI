@@ -186,3 +186,55 @@ Instead of producing CSS or platform-specific styles, the model expresses:
 Each renderer maps those intents into its own styling system.
 
 This keeps prompts portable while allowing every platform to evolve independently.
+
+---
+
+# ADR-009: `parsePage()` as Mandatory Runtime Entry Point
+
+## Status
+
+Accepted
+
+## Decision
+
+Every semantic page document must pass through `parsePage()` before rendering.
+
+## Rationale
+
+`parsePage()` centralizes schema validation and business validation.
+
+This prevents raw AI output from reaching platform renderers and keeps rendering deterministic, safe, and architecture-compliant.
+
+---
+
+# ADR-010: Registry-based Renderer MVP
+
+## Status
+
+Accepted
+
+## Decision
+
+The Web renderer MVP resolves validated Components through a component registry before delegating to platform-specific renderers and UI library components.
+
+```text
+Semantic Page
+      │
+      ▼
+parsePage()
+      │
+      ▼
+Registry
+      │
+      ▼
+Platform Renderers
+      │
+      ▼
+UI Library
+```
+
+## Rationale
+
+A registry keeps component lookup deterministic and extensible.
+
+Platform renderers remain responsible for implementation details, while `@genui/core` remains the platform independent source of truth.
