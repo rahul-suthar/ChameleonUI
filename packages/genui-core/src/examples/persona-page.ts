@@ -80,7 +80,7 @@ const projectHeading: Component = {
   order: 1,
   style: cardTitleStyle,
   data: {
-    content: "GenUI Platform",
+    content: "ChameleonUI",
   },
 };
 

@@ -1,8 +1,8 @@
-# GenUI Platform Architecture
+# ChameleonUI Architecture
 
 ## Vision
 
-GenUI is a platform-agnostic Generative UI framework.
+ChameleonUI is a platform-agnostic Generative UI framework.
 
 Instead of generating executable code, the AI generates structured JSON documents describing **what** should be rendered.
 

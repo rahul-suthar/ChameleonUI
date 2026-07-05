@@ -24,7 +24,7 @@ export function ButtonRenderer({ component }: Props) {
     switch (action.id) {
       case "view_repository":
         // router.push('/dash');
-        window.open('https://github.com/rahul-suthar/genui-platform-boilerplate', "_blank", "noopener");
+        window.open('https://github.com/rahul-suthar/ChameleonUI.git', "_blank", "noopener");
         break;
 
       default:

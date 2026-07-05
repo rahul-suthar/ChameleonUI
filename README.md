@@ -1,4 +1,4 @@
-# GenUI Platform Boilerplate
+# ChameleonUI
 
 A platform-agnostic Generative UI framework that separates application logic from presentation, allowing AI to generate personalized user interfaces while keeping business logic secure, deterministic, and platform independent.
 
@@ -152,9 +152,9 @@ In order to clone, install, validate, and run the workspace locally:
 
 ```bash
 # 1. Clone repository to local environment and move into project folder.
-git clone https://github.com/rahul-suthar/genui-platform-boilerplate.git
+git clone https://github.com/rahul-suthar/ChameleonUI.git
 
-cd genui-platform-boilerplate
+cd ChameleonUI
 
 # 2. Create and Switch to new branch.
 
@@ -192,6 +192,6 @@ pnpm list -r --depth 0
 
 ## Vision
 
-GenUI aims to provide a secure, deterministic, platform-agnostic runtime where large language models generate structure instead of code.
+ChameleonUI aims to provide a secure, deterministic, platform-agnostic runtime where large language models generate structure instead of code.
 
 By constraining AI to validated schemas rather than executable output, the framework enables personalized interfaces while preserving application security, maintainability, and predictable behavior.

@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GenUI Web",
+  title: "ChameleonUI Web Interface",
   description: "Powered by @genui/core",
 };
 

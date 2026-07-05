@@ -1,6 +1,6 @@
-# GenUI Implementation Roadmap
+# ChameleonUI Implementation Roadmap
 
-This document tracks the implementation progress of the GenUI platform.
+This document tracks the implementation progress of the ChameleonUI.
 
 Each phase represents a major architectural milestone. A phase is considered complete only when every task within it has been implemented, validated, and integrated into the platform.
 

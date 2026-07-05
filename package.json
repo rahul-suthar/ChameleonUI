@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "genui-platform-boilerplate",
+  "name": "chameleon-ui",
   "packageManager": "pnpm@10.30.2",
   "type": "module",
   "scripts": {

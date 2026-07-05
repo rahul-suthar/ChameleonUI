@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-GenUI is a platform-agnostic Generative UI framework.
+ChameleonUI is a platform-agnostic Generative UI framework.
 
 Large Language Models generate structured JSON documents describing user interfaces.
 

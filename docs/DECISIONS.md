@@ -1,6 +1,6 @@
 # Architecture Decision Records
 
-This document records the major architectural decisions made throughout the development of GenUI.
+This document records the major architectural decisions made throughout the development of ChameleonUI.
 
 Each ADR captures the context, the decision, and the reasoning behind it. Once accepted, an ADR represents the architectural direction of the project and should only change through a new ADR.
 
